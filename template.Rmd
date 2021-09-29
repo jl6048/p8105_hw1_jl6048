@@ -1,0 +1,56 @@
+---
+title: "Homework 1"
+author: "Jinghan Liu"
+date: "2021.9.29"
+output: github_document
+---
+```{r}
+library(tidyverse)
+library(palmerpenguins)
+library(ggplot2)
+```
+**Problem 1**
+```{r}
+weight_changes_df = 
+  tibble( 
+  vec_weightchanges = rnorm(10) , 
+  vec_logical = vec_weightchanges > 0 ,
+  vec_char = LETTERS [1:10] ,
+  vec_factor = factor(c("A","B","C","C","B","A","A","B","C","C"))
+)
+```
+
+
+```{r}
+mean(pull(weight_changes_df,vec_weightchanges))
+mean(pull(weight_changes_df,vec_logical))
+mean(pull(weight_changes_df,vec_char))
+mean(pull(weight_changes_df,vec_factor))
+```
+
+```{r}
+logic_to_numeric = as.numeric(pull(weight_changes_df,vec_logical))
+factor_to_numeric = as.numeric(pull(weight_changes_df,vec_factor))
+char_to_numeric = as.numeric(pull(weight_changes_df,vec_char))
+```
+#fator vector and logic vector can numeric, but charactor vector cannot be numeric.
+
+**Problem 2**
+```{r}
+data("penguins", package = "palmerpenguins")
+name = colnames(penguins)
+n_row = nrow(penguins)
+n_col = ncol(penguins)
+mean_flipper = mean(pull(penguins,var=flipper_length_mm),na.rm = TRUE)
+```
+the important variables are `r name`
+the dataset test `r n_row` rows and `r n_col` columns
+the mean flipper length is `r mean_flipper`
+
+```{r warning=FALSE}
+ggplot(penguins, aes(x = bill_length_mm, y = flipper_length_mm)) + geom_point(aes(color = species))
+ggsave("penguins_plot.pdf",height = 6,width = 6)
+```
+
+
+
